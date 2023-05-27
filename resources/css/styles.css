@@ -1,0 +1,18 @@
+/*
+ * Animation transition vue-router
+ */
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+	opacity: 0;
+}
+
+input:disabled{
+	background-color: var(--kt-input-disabled-bg)!important;
+/*	background-color: #cbced1!important;*/
+/*	background-color: red;*/
+}
