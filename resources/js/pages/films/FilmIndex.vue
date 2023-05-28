@@ -155,7 +155,7 @@ const reloadFilms = () =>
 		loadFilms();
 	})
 	.catch((error) => {
-		// loading.value = false;
+		loading.value = false;
 	});
 }
 

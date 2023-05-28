@@ -190,6 +190,9 @@ class FilmController extends Controller
     }
 
 
+    /*
+     * Permet la recherche rapide d'un film
+     */
     public function searchBar(Request $request)
     {
         $results = null;
@@ -225,9 +228,11 @@ class FilmController extends Controller
     }
 
 
+    /*
+     * Recharge les films depuis l'API
+     */
     public function reloadFilms()
     {
         \Artisan::call('command:import_films');
-        // return response()->json()
     }
 }
