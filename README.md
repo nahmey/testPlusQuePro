@@ -63,8 +63,17 @@ npm install
 ```sh
 php artisan command:import_films
 ```
-9) Ouvrir votre navigateur puis se rendre à l'adresse de votre application (exemple : http://localhost/plusQuePro/public/login)
+9) Ouvrir votre navigateur puis se rendre à l'adresse de votre application (exemple : http://localhost/testPlusQuePro/public)
 
 10) Pour se connecter :
 - Adresse Mail : user@user.fr
 - Mot de passe : user123456
+
+11) Fonctionnalités
+- Système de connexion
+- Script de récupération des films depuis l'API
+- Page liste des films avec pagination + tri + recherche rapide
+- Bouton de rechargement de tous les films depuis l'API
+- Consultation d'un film
+- Édition d'un film
+- Suppression d'un film
