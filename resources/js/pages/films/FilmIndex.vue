@@ -2,7 +2,21 @@
 	<loading-card-overlay :loading="loading">
 		<div class="card-header">
 			<div class="d-flex flex-wrap justify-content-between align-items-center">
-				<h1>Liste des films</h1>
+				<h2>Liste des films</h2>
+
+				<AutoComplete 
+				v-model="searchbar"
+				:suggestions="searchbar_results"
+				@complete="search($event)"
+				optionLabel="title"
+				inputId="id"
+				:dropdown="true"
+				class="col-6"
+				placeholder="Rechercher un film"
+				@update:modelValue="loadFilms()"
+				/>
+
+				
 
 				<div class="ps-4">
 					<div class="d-flex align-items-center">
@@ -13,6 +27,9 @@
 						v-on:setPages="checkPages"
 						>
 						</PerPage>
+						<button class="btn btn-secondary ms-2" @click="reloadFilms()">
+							<i class="fa-solid fa-arrows-rotate"></i> Recharger les films
+						</button>
 					</div>
 				</div>
 			</div>
@@ -104,7 +121,8 @@ import { usePagination } from '@/components/utilities/paginate.js';
 import tableSortButton from '@/components/utilities/tableSortButton.vue';
 import lPagination from '@/components/utilities/lPagination.vue';
 import PerPage from '@/components/utilities/perPageComponent.vue';
-import Swal from 'sweetalert2'
+import AutoComplete from 'primevue/autocomplete';
+import Swal from 'sweetalert2';
 
 const base_url = inject('base_url');
 const convertDate = inject('convertDate');
@@ -112,6 +130,8 @@ const films = ref(null);
 const poster_base_path = "https://image.tmdb.org/t/p/original";
 const loading = ref(true);
 const showSuccessErrors = inject('showSuccessErrors');
+const searchbar = ref(null);
+const searchbar_results = ref(null);
 
 let {
 	pages,
@@ -124,6 +144,35 @@ let {
 	checkCurrentSortDir,
 	checkCurrentSort,
 } = usePagination();
+
+const reloadFilms = () =>
+{
+	loading.value = true;
+	axios.get(base_url+'/films/reload_films')
+	.then(response => response.data)
+	.then(data => {
+		searchbar.value = null;
+		loadFilms();
+	})
+	.catch((error) => {
+		// loading.value = false;
+	});
+}
+
+const search = (event) =>
+{
+	if(event.query){
+		let data = { search: event.query }
+		axios.post(base_url+'/films/searchbar', data)
+		.then(response => response.data)
+		.then(data => {
+			searchbar_results.value = data;
+		})
+		.catch((error) => {
+			console.log(error)
+		});
+	}
+}
 
 const confirmDeleteFilm = (film_id) =>
 {
@@ -147,7 +196,6 @@ const confirmDeleteFilm = (film_id) =>
 
 const deleteFilm = (film_id) =>
 {
-	// console.log(film_id);
 	axios.delete(base_url + '/films/' + film_id , {params: {'id': film_id}})
 	.then((response) => {
         if(response.data.error == false){
@@ -164,8 +212,15 @@ const deleteFilm = (film_id) =>
 const loadFilms = () =>
 {
 	loading.value = true;
+	let film_id = '';
+
+	if(searchbar.value && searchbar.value.id){
+		page.value = 1;
+		film_id = searchbar.value.id;
+	}
+
 	let route = base_url+'/films?';
-	let params = 'page='+page.value+'&per_page='+per_page.value+'&current_sort='+current_sort.value+'&current_sort_dir='+current_sort_dir.value;
+	let params = 'page='+page.value+'&per_page='+per_page.value+'&current_sort='+current_sort.value+'&current_sort_dir='+current_sort_dir.value+'&film_id='+film_id;
 
 	axios.get(route+params)
 	.then(response => response.data)

@@ -20,6 +20,7 @@
         "@kyvg/vue3-notification": "^2.9.1",
         "@vueform/multiselect": "^2.6.2",
         "moment": "^2.29.4",
+        "primevue": "^3.29.1",
         "vue-router": "^4.2.1",
         "vue-sweetalert2": "^5.0.5"
     }

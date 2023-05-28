@@ -19,7 +19,7 @@ class ImportFilms extends Command
      *
      * @var string
      */
-    protected $signature = 'command:import_film';
+    protected $signature = 'command:import_films';
 
     /**
      * The console command description.

@@ -34,7 +34,10 @@ class FilmController extends Controller
     {
         $films = 
         Film::
-        orderby($request->current_sort, $request->current_sort_dir)
+        when(!empty($request->film_id), function($query) use($request){
+            $query->where('id', $request->film_id);
+        })
+        ->orderby($request->current_sort, $request->current_sort_dir)
         ->paginate($request->per_page);
 
         return response()->json(compact('films'));
@@ -187,6 +190,21 @@ class FilmController extends Controller
     }
 
 
+    public function searchBar(Request $request)
+    {
+        $results = null;
+
+        if(!empty($request->search)){
+            $results = 
+            Film::select('id', 'title')
+            ->where('title', 'LIKE', $request->search.'%')
+            ->get();
+        }
+
+        return $results;
+    }
+
+
     /*
      * Affiche les succès si tout est ok
      */
@@ -204,5 +222,12 @@ class FilmController extends Controller
         }
 
         return $results;
+    }
+
+
+    public function reloadFilms()
+    {
+        \Artisan::call('command:import_films');
+        // return response()->json()
     }
 }

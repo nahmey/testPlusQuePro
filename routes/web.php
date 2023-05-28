@@ -21,6 +21,12 @@ Route::group(['middleware' => ['auth', 'web']], function(){
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+    Route::get('/films/reload_films', function () {
+        Artisan::call('command:import_films');
+        return redirect('/');
+    });
+    Route::post('/films/searchbar', [App\Http\Controllers\FilmController::class, 'searchBar'])->name('film.searchbar');
     Route::resource('/films', App\Http\Controllers\FilmController::class);
 
 });
