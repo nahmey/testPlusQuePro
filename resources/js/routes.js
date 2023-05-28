@@ -4,20 +4,20 @@ const routes = [
     {
         path: '/',
         name:'accueil.index',
-        component: () => import('@/pages/accueil/Accueil.vue'),
-        meta:{title:'Accueil'}
+        component: () => import('@/pages/films/FilmIndex.vue'),
+        meta:{title:'Liste des films'}
     },
     {
-        path: '/page1',
-        name:'page1.index',
-        component: () => import('@/pages/accueil/page1.vue'),
-        meta:{title:'Page 1'}
+        path: '/film/:id',
+        name:'film.show',
+        component: () => import('@/pages/films/FilmShow.vue'),
+        meta:{title:'Détails du film'}
     },
     {
-        path: '/page2',
-        name:'page2.index',
-        component: () => import('@/pages/accueil/page2.vue'),
-        meta:{title:'Page 2'}
+        path: '/film/edit/:id',
+        name:'film.edit',
+        component: () => import('@/pages/films/FilmEdit.vue'),
+        meta:{title:'Modifier un film'}
     },
 ]
 

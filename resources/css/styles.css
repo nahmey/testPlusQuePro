@@ -11,8 +11,33 @@
 	opacity: 0;
 }
 
-input:disabled{
-	background-color: var(--kt-input-disabled-bg)!important;
-/*	background-color: #cbced1!important;*/
-/*	background-color: red;*/
+/*
+ * Overlay
+ */
+.overlay {
+	position: relative;
+}
+.overlay .overlay-layer {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.5)!important;
+	transition: all 0.3s ease;
+	opacity: 0;
+}
+.overlay.overlay-show .overlay-layer, .overlay.overlay-block .overlay-layer, .overlay:hover .overlay-layer {
+	transition: all 0.3s ease;
+	opacity: 1;
+}
+.overlay.overlay-block {
+	cursor: wait;
+}
+.spinner-fixed{
+	position:fixed!important;
+	top:50%!important;
 }

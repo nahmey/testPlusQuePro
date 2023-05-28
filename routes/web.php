@@ -20,4 +20,7 @@ Auth::routes(['register' => false, 'reset' => false]);
 Route::group(['middleware' => ['auth', 'web']], function(){
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::resource('/films', App\Http\Controllers\FilmController::class);
+
 });
